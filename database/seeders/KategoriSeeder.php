@@ -2,10 +2,10 @@
 
 namespace Database\Seeders;
 
-use App\Models\Kategori;
-use Illuminate\Support\Str;
 use Illuminate\Database\Seeder;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
+use Carbon\Carbon;
 
 class KategoriSeeder extends Seeder
 {
@@ -14,40 +14,69 @@ class KategoriSeeder extends Seeder
      */
     public function run(): void
     {
-        $kategoris = [
-            // Kategori Musik
-            ['nm_kategori' => 'Pop', 'jenis' => 'musik', 'deskripsi' => 'Musik populer mainstream'],
-            ['nm_kategori' => 'Rock', 'jenis' => 'musik', 'deskripsi' => 'Musik rock dan metal'],
-            ['nm_kategori' => 'Jazz', 'jenis' => 'musik', 'deskripsi' => 'Musik jazz dan blues'],
-            ['nm_kategori' => 'Folk', 'jenis' => 'musik', 'deskripsi' => 'Musik folk dan akustik'],
-            ['nm_kategori' => 'Electronic', 'jenis' => 'musik', 'deskripsi' => 'Musik elektronik dan EDM'],
-            ['nm_kategori' => 'Indie', 'jenis' => 'musik', 'deskripsi' => 'Musik independen'],
-            ['nm_kategori' => 'Hip Hop', 'jenis' => 'musik', 'deskripsi' => 'Musik hip hop dan rap'],
-            ['nm_kategori' => 'R&B', 'jenis' => 'musik', 'deskripsi' => 'Rhythm and blues'],
-
-            // Kategori Acara
-            ['nm_kategori' => 'Workshop', 'jenis' => 'acara', 'deskripsi' => 'Workshop musik dan teknik'],
-            ['nm_kategori' => 'Masterclass', 'jenis' => 'acara', 'deskripsi' => 'Kelas master dengan ahli'],
-            ['nm_kategori' => 'Open Mic', 'jenis' => 'acara', 'deskripsi' => 'Acara open mic night'],
-            ['nm_kategori' => 'Album Launch', 'jenis' => 'acara', 'deskripsi' => 'Peluncuran album'],
-            ['nm_kategori' => 'Showcase', 'jenis' => 'acara', 'deskripsi' => 'Showcase artis'],
-            ['nm_kategori' => 'Networking', 'jenis' => 'acara', 'deskripsi' => 'Acara networking industri musik'],
-
-            // Kategori Dokumentasi
-            ['nm_kategori' => 'Behind The Scene', 'jenis' => 'dokumentasi', 'deskripsi' => 'Dokumentasi dibalik layar'],
-            ['nm_kategori' => 'Live Performance', 'jenis' => 'dokumentasi', 'deskripsi' => 'Dokumentasi pertunjukan langsung'],
-            ['nm_kategori' => 'Studio Session', 'jenis' => 'dokumentasi', 'deskripsi' => 'Dokumentasi sesi studio'],
-            ['nm_kategori' => 'Interview', 'jenis' => 'dokumentasi', 'deskripsi' => 'Wawancara artis'],
-            ['nm_kategori' => 'Music Video', 'jenis' => 'dokumentasi', 'deskripsi' => 'Video musik'],
+        $kategoriMusik = [
+            ['nm_kategori' => 'Pop', 'deskripsi' => 'Musik populer dengan melodi yang mudah diingat'],
+            ['nm_kategori' => 'Rock', 'deskripsi' => 'Musik rock dengan beat yang kuat'],
+            ['nm_kategori' => 'Jazz', 'deskripsi' => 'Musik jazz dengan improvisasi'],
+            ['nm_kategori' => 'Blues', 'deskripsi' => 'Musik blues dengan nuansa sedih'],
+            ['nm_kategori' => 'Folk', 'deskripsi' => 'Musik tradisional'],
+            ['nm_kategori' => 'Electronic', 'deskripsi' => 'Musik elektronik modern'],
         ];
 
-        foreach ($kategoris as $kategori) {
-            Kategori::create([
+        $kategoriAcara = [
+            ['nm_kategori' => 'Konser Musik', 'deskripsi' => 'Pertunjukan musik live'],
+            ['nm_kategori' => 'Workshop', 'deskripsi' => 'Pelatihan dan pembelajaran musik'],
+            ['nm_kategori' => 'Open Mic', 'deskripsi' => 'Acara terbuka untuk musisi'],
+            ['nm_kategori' => 'Rekaman Studio', 'deskripsi' => 'Sesi rekaman di studio'],
+            ['nm_kategori' => 'Kolaborasi', 'deskripsi' => 'Proyek kolaborasi antar musisi'],
+        ];
+
+        $kategoriDokumentasi = [
+            ['nm_kategori' => 'Behind The Scenes', 'deskripsi' => 'Dokumentasi proses kreatif'],
+            ['nm_kategori' => 'Live Performance', 'deskripsi' => 'Dokumentasi pertunjukan langsung'],
+            ['nm_kategori' => 'Music Video', 'deskripsi' => 'Video musik official'],
+            ['nm_kategori' => 'Interview', 'deskripsi' => 'Wawancara dengan artis'],
+            ['nm_kategori' => 'Event Coverage', 'deskripsi' => 'Liputan acara musik'],
+        ];
+
+        $now = Carbon::now();
+
+        // Insert kategori musik
+        foreach ($kategoriMusik as $kategori) {
+            DB::table('kategori')->insert([
                 'nm_kategori' => $kategori['nm_kategori'],
                 'slug' => Str::slug($kategori['nm_kategori']),
-                'jenis' => $kategori['jenis'],
                 'deskripsi' => $kategori['deskripsi'],
+                'jenis' => 'musik',
                 'aktif' => true,
+                'created_at' => $now,
+                'updated_at' => $now,
+            ]);
+        }
+
+        // Insert kategori acara
+        foreach ($kategoriAcara as $kategori) {
+            DB::table('kategori')->insert([
+                'nm_kategori' => $kategori['nm_kategori'],
+                'slug' => Str::slug($kategori['nm_kategori']),
+                'deskripsi' => $kategori['deskripsi'],
+                'jenis' => 'acara',
+                'aktif' => true,
+                'created_at' => $now,
+                'updated_at' => $now,
+            ]);
+        }
+
+        // Insert kategori dokumentasi
+        foreach ($kategoriDokumentasi as $kategori) {
+            DB::table('kategori')->insert([
+                'nm_kategori' => $kategori['nm_kategori'],
+                'slug' => Str::slug($kategori['nm_kategori']),
+                'deskripsi' => $kategori['deskripsi'],
+                'jenis' => 'dokumentasi',
+                'aktif' => true,
+                'created_at' => $now,
+                'updated_at' => $now,
             ]);
         }
     }

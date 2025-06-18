@@ -143,16 +143,16 @@ class KategoriController extends Controller
         $data = Kategori::findOrFail($id);
 
         // Check if kategori is being used
-        $usedInKaryaMusik = $data->karyaMusik()->count();
-        $usedInJadwal = $data->jadwalKegiatan()->count();
+        // $usedInKaryaMusik = $data->karyaMusik()->count();
+        // $usedInJadwal = $data->jadwalKegiatan()->count();
 
-        if ($usedInKaryaMusik > 0 || $usedInJadwal > 0) {
-            return response()->json([
-                'judul' => 'Gagal',
-                'type' => 'error',
-                'message' => 'Kategori tidak dapat dihapus karena masih digunakan.',
-            ], 400);
-        }
+        // if ($usedInKaryaMusik > 0 || $usedInJadwal > 0) {
+        //     return response()->json([
+        //         'judul' => 'Gagal',
+        //         'type' => 'error',
+        //         'message' => 'Kategori tidak dapat dihapus karena masih digunakan.',
+        //     ], 400);
+        // }
 
         $data->delete();
 

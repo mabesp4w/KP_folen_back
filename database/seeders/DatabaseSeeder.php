@@ -18,8 +18,8 @@ class DatabaseSeeder extends Seeder
             KaryaMusikSeeder::class,
             JadwalKegiatanSeeder::class,
             DokumentasiSeeder::class,
-            KaryaMusikKategoriSeeder::class,
-            JadwalKategoriSeeder::class,
+            // KaryaMusikKategoriSeeder::class,
+            // JadwalKategoriSeeder::class,
         ]);
 
         $this->command->info('🎵 Database seeded successfully with music studio data!');
